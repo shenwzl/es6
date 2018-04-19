@@ -1,7 +1,8 @@
 class Map {
-  constructor() {
+  constructor(arr) {
     this.size = 0
     this.obj = {}
+    //arr.forEach(([v1, v2]) => this.obj.set(v1, v2))
   }
   has(key) {
     return key in this.obj
