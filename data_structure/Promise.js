@@ -55,8 +55,8 @@ class Promise {
     defferd.forEach(def => this.handle(def))
   }
 
-  then(onfulfiled, onrejected) {
-    const o = { onfulfiled, onrejected }
+  then(onfulfilled, onrejected) {
+    const o = { onfulfilled, onrejected }
     const status = this.status
     o.promise = new this.constructor(function () {})
     if (status === PENDING) {

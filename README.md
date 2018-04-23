@@ -3,7 +3,7 @@
 ## Set()
 
 - property: `size`, `obj`
-- operate: `add()`,`delete`,`set()`,`get()`,`has`,`clear`
+- operate: `delete(value)`,`add(value)`,`has(key)`,`clear()`
 - iterator: `keys()`,`values()`,`entries()`
 
 > No `forEach()` added,No default iterator
@@ -11,7 +11,12 @@
 ## Map()
 
 - property: `size`, `obj`
-- operate: `add()`,`delete`,`set()`,`get()`,`has`,`clear`
+- operate: `delete(key)`,`set(key, value)`,`get(key)`,`has(key)`,`clear()`
 - iterator: `keys()`,`values()`,`entries()`
+
+## Promise()
+
+- property: `status`,`value`,`defferd`
+- method:`resolve(result)`,`rejject(error)`,`handle(fn)`,`done()`,`then(onfufilled, onrejected)` 
 
 > No default Value
