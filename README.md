@@ -1,6 +1,6 @@
 # es6
 
-## Set()
+### Set()
 
 - property: `size`, `obj`
 - operate: `delete(value)`,`add(value)`,`has(key)`,`clear()`
@@ -8,15 +8,17 @@
 
 > No `forEach()` added,No default iterator
 
-## Map()
+### Map()
 
 - property: `size`, `obj`
 - operate: `delete(key)`,`set(key, value)`,`get(key)`,`has(key)`,`clear()`
 - iterator: `keys()`,`values()`,`entries()`
 
-## Promise()
+### Promise()
 
 - property: `status`,`value`,`defferd`
 - method:`resolve(result)`,`rejject(error)`,`handle(fn)`,`done()`,`then(onfufilled, onrejected)` 
 
-> No default Value
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
