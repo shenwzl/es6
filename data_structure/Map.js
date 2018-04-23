@@ -1,11 +1,15 @@
 class Map {
-  constructor(arr) {
-    this.size = 0
-    this.obj = {}
-    //arr.forEach(([v1, v2]) => this.obj.set(v1, v2))
+  constructor(arr = []) {
+    this.obj = []
+    arr.forEach(([v1, v2]) => this.obj.push({
+      key: v1,
+      value: v2
+    }))
+    this.size = this.obj.length
   }
   has(key) {
-    return key in this.obj
+    let hasKey = this.obj.forEach(o => o === key ? true : false)
+    return hasKey
   }
   set(key, value) {
     if (!this.has(key)) {
@@ -41,4 +45,4 @@ class Map {
   }
 }
 
-export default Map
+//export default Map
