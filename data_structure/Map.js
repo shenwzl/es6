@@ -1,31 +1,48 @@
 class Map {
   constructor(arr = []) {
     this.obj = []
-    arr.forEach(([v1, v2]) => this.obj.push({
-      key: v1,
-      value: v2
-    }))
+    arr.forEach(([key, value]) => this.obj.push({key, value}))
     this.size = this.obj.length
   }
+  static isNaNOrIsZero(val) {
+    return val.toString() === 'NaN' || val.toString() === '0'
+  }
   has(key) {
-    let hasKey = this.obj.forEach(o => o === key ? true : false)
-    return hasKey
+    let flag = false
+    this.obj.forEach(obj => {
+      if (Map.isNaNOrIsZero(key)) {
+        if (obj.key.toString() === key.toString()) flag = true
+      } else {
+        if (obj.key === key) flag = true
+      }
+    })
+    return flag
   }
   set(key, value) {
     if (!this.has(key)) {
       this.size++
+      this.obj.push({key, value})      
     }
-    this.obj[key] = value
+    return this
   }
   get(key) {
+    let value
     if (this.has(key)) {
-      return this.obj[key]
+      this.obj.forEach(obj => key === obj.key ? value = obj.value : '')      
     }
-    return undefined
+    if (Map.isNaNOrIsZero(key)) {
+      this.obj.forEach(obj => key.toString() === obj.key.toString() && obj.key !== obj.key.toString() ? value = obj.value : '')
+    }
+    return value
   }
   delete(key) {
-    if (this.obj[key]) {
-      delete this.obj[key]
+    if (this.has(key)) {
+      this.obj.map((obj, index) => {
+        if ((Map.isNaNOrIsZero(key) && obj.key.toString() === key.toString()) || obj.key === key) {
+          this.obj.splice(index, 1)
+          this.size--
+        }
+      })
       return true
     }
     return false
@@ -35,14 +52,14 @@ class Map {
     this.size = 0
   }
   keys() {
-    return Object.keys(this.obj)
+    return this.obj.map(obj => obj.key)
   }
   values() {
-    return Object.values(this.obj)
+    return this.obj.map(obj => obj.value)
   }
   entries() {
-    return Object.entries(this.obj)
+    return this.obj.map(obj => {
+      return {key: obj.key, value: obj.value}
+    })
   }
 }
-
-//export default Map
