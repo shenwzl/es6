@@ -1,47 +1,65 @@
 class Set {
-  constructor(arr = []) {
-    this.obj = {}
-    if (arr.length) {
-      arr.forEach(val => !this.obj[val] ? this.obj[val] = val : null)
-    }
-    this.size = Object.keys(this.obj).length
+  constructor(arg = []) {
+    this.size = 0
+    this[Symbol.species] = this
+    this._set = Array.isArray(arg) && arg
+    Set.refresh.call(this)
+  }
+  static refresh() {    
+    let _set = []
+    this._set.forEach(obj => {
+      if(_set.indexOf(obj) === -1 && obj !== undefined) {
+        _set.push(obj)
+      }
+    })
+    this._set = _set
+    this.size = this._set.length
   }
   add(value) {
-    if (this.obj[value]) {
-      return this
-    }
-    this.obj[value] = value
-    this.size++
+    this._set.push(value)
+    Set.refresh.call(this)
     return this
   }
   delete(value) {
-    if (this.obj[value]) {
-      delete this.obj[value]
-      this.size--
-      return this
+    if (this._set.indexOf(value) !== -1) {
+      this._set[this._set.indexOf(value)] = undefined
     }
+    Set.refresh.call(this)
     return this
   }
   has(value) {
-    return value in this.obj
+    if (this._set.indexOf(value) !== -1) return true
+    return false
   }
   clear() {
-    this.obj = {}
+    this._set.length = 0
     this.size = 0
+    return this
   }
   keys() {
-    return Object.values(this.obj)
+    return this[Symbol.iterator]()
   }
   values() {
-    return Object.values(this.obj)
+    return this[Symbol.iterator]()
   }
   entries() {
-    return [Object.values(this.obj), Object.values(this.obj)]
+    let result = []
+    this.forEach((key, value) => result.push([key, value]))
+    return result
+  }
+  forEach(fn, ctx) {
+    if (typeof fn !== 'function') {
+      throw new Error('params is not a function')
+    }
+    this._set.forEach(value => fn.call(ctx || value, value, value, this))
+  }
+  *[Symbol.iterator] () {
+    let index = 0
+    let val = undefined
+    while(index < this.size) {
+      val = this._set[index]
+      yield val
+      index++
+    }
   }
 }
-
-const a = new Set([1,1])
-console.log(a)
-
-const unique = [...new Set([1,1,2,3,4,5,6,5,4,3]).values()]
-console.log(unique)
